@@ -1,0 +1,27 @@
+{
+  "name": "coffee-stack",
+  "version": "1.0.0",
+  "description": "A boilerplate for building web apps with pure coffee-script",
+  "scripts": {
+    "start": "./node_modules/.bin/coffee server.coffee",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/githistory/coffee-stack.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/githistory/coffee-stack/issues"
+  },
+  "homepage": "https://github.com/githistory/coffee-stack",
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "ccss": "^0.1.2-1",
+    "coffee-script": "^1.11.0",
+    "coffeekup": "^0.3.1",
+    "eval": "^0.1.1",
+    "hapi": "^15.1.1"
+  }
+}
