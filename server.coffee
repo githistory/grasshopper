@@ -5,12 +5,15 @@ ccss = require 'ccss'
 coffee = require 'coffee-script'
 fs = BB.promisifyAll require 'fs'
 _eval = require 'eval'
+Inert = require 'inert'
 appRoot = process.cwd()
 
 server = new Hapi.Server()
 server.connection
   host: 'localhost'
   port: 3456
+
+server.register Inert
 
 server.route
   method: 'GET'
@@ -39,9 +42,7 @@ server.route
   method: 'GET'
   path: '/vendor/{path*}'
   handler: (req, rep)->
-    fs.readFileAsync "#{appRoot}/bower_components/#{req.params.path}", 'utf8'
-      .then (asset)-> rep asset
-      .catch (err)-> rep err
+    rep.file "#{appRoot}/bower_components/#{req.params.path}"
 
 server.start (err)->
   if err then throw err
