@@ -13,7 +13,11 @@ angular.module 'grasshopper'
         socket.disconnect()
 
       socket = io.connect '/',
-        query: "host=#{loginInfo.host}&port=#{loginInfo.port or '22'}&username=#{loginInfo.username}&#{if loginInfo.usePrivateKey then "privateKey=#{encodeURIComponent(loginInfo.privateKey)}" else "password=#{encodeURIComponent(loginInfo.password)}"}",
+        query: "host=#{loginInfo.host}\
+                &port=#{loginInfo.port or '22'}\
+                &username=#{loginInfo.username}\
+                &#{if loginInfo.usePrivateKey then "privateKey=#{encodeURIComponent(loginInfo.privateKey)}" else "password=#{encodeURIComponent(loginInfo.password)}"}\
+                &command=#{loginInfo.command}"
         secure: true
 
       socket.on 'connect', callbacks.connect

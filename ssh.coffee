@@ -24,6 +24,8 @@ exports.register = (server, options, next)->
         socket.on 'data', (data)-> stream.write data
         stream.on 'data', (data)-> socket.emit 'data', data.toString('utf-8')
         stream.on 'close',  -> ssh.end()
+        console.log socket.handshake.query.command
+        if socket.handshake.query.command then stream.write "#{socket.handshake.query.command}\n"
     ssh.on 'end', ->
       socket.disconnect()
     ssh.on 'close', ->

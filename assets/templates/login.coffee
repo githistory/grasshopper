@@ -9,7 +9,7 @@ div '.modal-body', ->
     div '.form-group', ->
       input '.form-control', type:'text', placeholder:'Username', 'ng-model':'loginInfo.username'
     div '.form-group', 'ng-hide':'loginInfo.usePrivateKey', ->
-      input '.form-control', type:'text', placeholder:'Password', 'ng-model':'loginInfo.password'
+      input '.form-control', type:'password', placeholder:'Password', 'ng-model':'loginInfo.password'
     div '.form-group', 'ng-show':'loginInfo.usePrivateKey', ->
       textarea '.form-control', placeholder:'Private Key', 'ng-model':'loginInfo.privateKey'
     div '.checkbox', ->

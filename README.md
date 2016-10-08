@@ -31,3 +31,4 @@ https://grasshopper.domain.name/?host=192.168.0.123&username=userB
 https://grasshopper.domain.name/?host=192.168.0.124&username=userB
 ```
 
+You'll also be able to pass in an initial command through the `command` query param.
