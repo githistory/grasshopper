@@ -1,38 +1,29 @@
 doctype 5
-html ->
+html 'ng-app':'grasshopper', ->
   head ->
-    meta charset: 'utf-8'
-    title "#{@title or 'Untitled'} | A completely plausible website"
-    meta(name: 'description', content: @description) if @description?
+    meta charset:'utf-8'
+    title "Grasshopper | A web ssh client"
 
-    link rel: 'stylesheet', href: '/css/app.css'
+    link rel:'stylesheet', href:'/vendor/bootstrap/dist/css/bootstrap.css'
+    link rel:'stylesheet', href:'/vendor/angular-bootstrap/ui-bootstrap-csp.css'
+    link rel:'stylesheet', href:'/vendor/bootswatch/paper/bootstrap.css'
+    link rel:'stylesheet', href:'/vendor/xterm.js/dist/xterm.css'
+    link rel:'stylesheet', href:'/assets/css/app.css'
 
-    style '''
-      body {font-family: sans-serif}
-      header, nav, section, footer {display: block}
-    '''
+    script src:'/vendor/angular/angular.js'
+    script src:'/vendor/angular-bootstrap/ui-bootstrap-tpls.js'
+    script src:'/vendor/socket.io-client/socket.io.js'
+    script src:'/vendor/angular-local-storage/dist/angular-local-storage.js'
+    script src:'/vendor/xterm.js/dist/xterm.js'
+    script src:'/vendor/xterm.js/addons/fit/fit.js'
+    script src:'/assets/js/app.js'
+    script src:'/assets/js/controllers/app.js'
+    script src:'/assets/js/controllers/login.js'
+    script src:'/assets/js/services/ssh.js'
+    script src:'/assets/js/services/terminal.js'
 
-    script src: '/vendor/angular/angular.js'
+  body 'ng-controller':'app', ->
+    div '#terminal-container', ->
+    div '#footer', ->
+      span '#login-info', 'ng-click':'promptForLoginInfo()', 'ng-class':"{'connected': connected}", -> '{{loginInfo.username}}@{{loginInfo.host}}'
 
-    coffeescript ->
-      alert 'Coffee Stack!'
-
-  body ->
-    header ->
-      h1 @title or 'Untitled'
-
-      nav ->
-        ul ->
-          (li -> a href: '/', -> 'Home') unless @path is '/'
-          li -> a href: '/chunky', -> 'Bacon!'
-
-    section ->
-
-      h2 "Let's count to 10:"
-
-      p i for i in [1..10]
-
-    footer ->
-      # CoffeeScript comments. Not visible in the output document.
-      comment 'HTML comments.'
-      p 'Bye!'

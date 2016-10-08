@@ -14,6 +14,7 @@ server.connection
   port: 3456
 
 server.register Inert
+server.register require './ssh'
 
 server.route
   method: 'GET'
@@ -47,4 +48,6 @@ server.route
 server.start (err)->
   if err then throw err
   console.log "server running at #{server.info.uri}"
+
+
 

@@ -1,21 +1,33 @@
-A boilerplate for building web apps with pure coffee-script
+Grasshopper is a web <-> ssh bridge that lets you hop to a ssh server from a web interface.
 
 Run
 ---
 
+Pull the repo and
 ```
-git clone https://github.com/githistory/coffee-stack.git
-cd coffee-stack
 npm install
 bower install
 npm start
 ```
+Then visit `http://localhost:3456`
 
 Usage
 -----
 
-Put your static assets in `assets` folder and you're good to go.
+You'll be greeted with a dialog asking you for login info on first visit. The info is then remembered in local storage. Subsequent visits will auto connect.
 
-For example, a `GET` request to `http://localhost:3456/assets/css/app.css` will trigger the server to read content in `assets/css/app.coffee`, compile it and return the corresponding css. Likewise for html and js.
+You can change the login info via query param such as
 
-Vendor assets are served without transpilation on `/vendor/{path}` where `path` is the path into `bower_components` under project root.
+```
+http://localhost:3456/?host=192.168.0.121&port=2222&username=anotheruser
+```
+
+This will be very handy when you wanna automate connecting to a bunch of hosts which you use the same password / privateKey to access. For example, you might have a monitoring system that lists a bunch of hosts on your network and you wanna allow users to login to those hosts via clicking on them. You can give the hosts urls like
+
+```
+https://grasshopper.domain.name/?host=192.168.0.121&username=userA
+https://grasshopper.domain.name/?host=192.168.0.122&username=userA
+https://grasshopper.domain.name/?host=192.168.0.123&username=userB
+https://grasshopper.domain.name/?host=192.168.0.124&username=userB
+```
+
