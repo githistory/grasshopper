@@ -1,4 +1,6 @@
 SSH = require 'ssh2'
+_ = require 'lodash'
+
 exports.register = (server, options, next)->
   console.log 'registering socket io ssh server'
   io = require('socket.io') server.listener
@@ -19,12 +21,12 @@ exports.register = (server, options, next)->
     ssh.on 'banner', (msg, lng)->
       socket.emit 'data', msg
     ssh.on 'ready', ->
+      socket.emit 'ssh-connected'
       ssh.shell (err, stream)->
         if err then return socket.emit 'status', "SSH Shell Error: #{err.message}"
         socket.on 'data', (data)-> stream.write data
         stream.on 'data', (data)-> socket.emit 'data', data.toString('utf-8')
         stream.on 'close',  -> ssh.end()
-        console.log socket.handshake.query.command
         if socket.handshake.query.command then stream.write "#{socket.handshake.query.command}\n"
     ssh.on 'end', ->
       socket.disconnect()
@@ -35,7 +37,10 @@ exports.register = (server, options, next)->
       socket.disconnect()
     ssh.on 'keyboard-interactive', (name, instructions, instructionsLang, prompts, finish)->
       finish [loginInfo.password]
-    ssh.connect loginInfo
+
+    socket.on 'auth', (authInfo)->
+      _.assign loginInfo, JSON.parse(authInfo)
+      ssh.connect loginInfo
 
   next()
 

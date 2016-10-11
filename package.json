@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "A boilerplate for building web apps with pure coffee-script",
   "scripts": {
-    "start": "./node_modules/.bin/coffee server.coffee",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "./node_modules/.bin/coffee server.coffee"
   },
   "repository": {
     "type": "git",
@@ -24,6 +23,7 @@
     "eval": "^0.1.1",
     "hapi": "^15.1.1",
     "inert": "^4.0.2",
+    "lodash": "^4.16.4",
     "socket.io": "^1.4.8",
     "ssh2": "^0.5.2"
   }

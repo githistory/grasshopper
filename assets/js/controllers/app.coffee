@@ -14,7 +14,7 @@ angular.module 'grasshopper'
       $scope.openLoginModal($scope.loginInfo).result
         .then (loginInfo)->
           $scope.loginInfo = loginInfo
-          $scope.connect()
+          $scope.checkAndConnect()
         .catch (err)->
           console.log err
           $log.info 'login canceled'
@@ -27,6 +27,11 @@ angular.module 'grasshopper'
         disconnect: -> $timeout -> $scope.connected = false
         error: -> $timeout -> $scope.connected = false
         data: (data)-> terminal.write data
+
+    $scope.checkAndConnect = ->
+      unless $scope.loginInfo.host and $scope.loginInfo.username and ($scope.loginInfo.password or $scope.loginInfo.privateKey) then return false
+      $scope.connect()
+      true
 
     $scope.getQueryParameters = ->
       search = $window.location.search.substring 1
@@ -51,10 +56,7 @@ angular.module 'grasshopper'
     catch err
       $scope.loginInfo = {}
 
-    if $scope.loginInfo.host and $scope.loginInfo.username and ($scope.loginInfo.password or $scope.loginInfo.privateKey)
-      $scope.connect()
-    else
-      $scope.promptForLoginInfo()
+    unless $scope.checkAndConnect() then $scope.promptForLoginInfo()
 
 ]
 
