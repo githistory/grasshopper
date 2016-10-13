@@ -12,7 +12,6 @@ angular.module 'grasshopper'
         visualBell: true
         popOnBell: true
         scrollback: 10000
-        cols: 500
       term.on 'data', callbacks.data
       term.open document.getElementById domId
       term.fit()

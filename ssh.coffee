@@ -13,16 +13,15 @@ exports.register = (server, options, next)->
     loginInfo = socket.handshake.query
     loginInfo.tryKeyboard = true
     loginInfo.port ?= '22'
-      #algorithms:
-        #cipher: ['aes128-cbc', '3des-cbc', 'aes256-cbc']
-        #hmac: ['hmac-sha2-256', 'hmac-sha2-512', 'hmac-sha1', 'hmac-sha1-96', 'hmac-md5-96']
 
     ssh = new SSH
     ssh.on 'banner', (msg, lng)->
       socket.emit 'data', msg
     ssh.on 'ready', ->
       socket.emit 'ssh-connected'
-      ssh.shell (err, stream)->
+      ssh.shell
+        cols: 11111111
+      , (err, stream)->
         if err then return socket.emit 'status', "SSH Shell Error: #{err.message}"
         socket.on 'data', (data)-> stream.write data
         stream.on 'data', (data)-> socket.emit 'data', data.toString('utf-8')
@@ -37,6 +36,10 @@ exports.register = (server, options, next)->
       socket.disconnect()
     ssh.on 'keyboard-interactive', (name, instructions, instructionsLang, prompts, finish)->
       finish [loginInfo.password]
+
+    socket.on 'error', (error)->
+      console.log "socket error: #{error}"
+      socket.disconnect()
 
     socket.on 'auth', (authInfo)->
       _.assign loginInfo, JSON.parse(authInfo)
